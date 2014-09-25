@@ -1,16 +1,36 @@
 package com.example.slickpic;
 
 import android.support.v7.app.ActionBarActivity;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.view.Menu;
 import android.view.MenuItem;
 
 public class MainActivity extends ActionBarActivity {
+	private static final int CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE = 100;
+	private static final String MEDIA_TYPE_IMAGE = null;
+	private Uri fileUri;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
+		
+		 // create Intent to take a picture and return control to the calling application
+	    Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+
+	    fileUri = getOutputMediaFileUri(MEDIA_TYPE_IMAGE); // create a file to save the image
+	    intent.putExtra(MediaStore.EXTRA_OUTPUT, fileUri); // set the image file name
+
+	    // start the image capture Intent
+	    startActivityForResult(intent, CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE);
+	}
+
+	private Uri getOutputMediaFileUri(String mediaTypeImage) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 	@Override
