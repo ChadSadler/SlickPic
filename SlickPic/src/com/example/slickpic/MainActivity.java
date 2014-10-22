@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.provider.MediaStore;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 public class MainActivity extends ActionBarActivity {
 	private static final int CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE = 100;
@@ -19,13 +20,34 @@ public class MainActivity extends ActionBarActivity {
 		setContentView(R.layout.activity_main);
 		
 		 // create Intent to take a picture and return control to the calling application
-	    Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+	    Intent cameraIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
 
-	    fileUri = getOutputMediaFileUri(MEDIA_TYPE_IMAGE); // create a file to save the image
-	    intent.putExtra(MediaStore.EXTRA_OUTPUT, fileUri); // set the image file name
+	    setFileUri(getOutputMediaFileUri(MEDIA_TYPE_IMAGE)); // create a file to save the image
+	    cameraIntent.putExtra(MediaStore.EXTRA_OUTPUT, getFileUri()); // set the image file name
 
 	    // start the image capture Intent
-	    startActivityForResult(intent, CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE);
+	    startActivityForResult(cameraIntent, CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE);
+	}
+	
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+	    if (requestCode == CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE) {
+	        if (resultCode == RESULT_OK) {
+	            // Image captured and saved to fileUri specified in the Intent
+	        	setFileUri(data.getData());
+	            Toast.makeText(this, "Image saved to:\n" + getFileUri(), Toast.LENGTH_LONG).show();
+	            
+	            Intent pictureViewIntent = new Intent(MainActivity.this,
+						PictureView.class);
+			
+				startActivity(pictureViewIntent);
+				
+	        } else if (resultCode == RESULT_CANCELED) {
+	            // User cancelled the image capture
+	        } else {
+	        	Toast.makeText(this, "Image capture failed", Toast.LENGTH_LONG).show();
+	        }
+	    }
+	    
 	}
 
 	private Uri getOutputMediaFileUri(String mediaTypeImage) {
@@ -51,4 +73,13 @@ public class MainActivity extends ActionBarActivity {
 		}
 		return super.onOptionsItemSelected(item);
 	}
+
+	public Uri getFileUri() {
+		return fileUri;
+	}
+
+	public void setFileUri(Uri fileUri) {
+		this.fileUri = fileUri;
+	}
+
 }
