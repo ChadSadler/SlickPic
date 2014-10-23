@@ -1,24 +1,37 @@
 package com.example.slickpic;
 
+import java.io.File;
+
 import android.app.Activity;
-import android.net.Uri;
+import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.widget.ImageView;
-import android.widget.Toast;
 
 public class PictureView extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		
-		Toast.makeText(this, "Image capture failed", Toast.LENGTH_LONG).show();
+		Bundle extras = getIntent().getExtras();
 		
-		MainActivity MainActivity = new MainActivity();
+		if(extras == null) {
+			return;
+		}
 		
-		Uri fileUri = MainActivity.getFileUri();
+		String fileUrl = extras.getString(Intent.EXTRA_TEXT);
 		
-		setContentView(R.layout.picture_view);
+		if(fileUrl != null) {
+			
+			setContentView(R.layout.picture_view);
+			
+			File imgFile = new File(fileUrl);
 
-		ImageView image = new ImageView(MainActivity);
-		image.setImageURI(fileUri);
+			Bitmap myBitmap = BitmapFactory.decodeFile(imgFile.getAbsolutePath());
+
+			ImageView myImage = (ImageView) findViewById(R.id.imgView);
+
+			myImage.setImageBitmap(myBitmap);	
+		}
 	}
 }

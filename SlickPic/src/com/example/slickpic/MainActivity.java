@@ -36,6 +36,11 @@ public class MainActivity extends ActionBarActivity {
 	        	setFileUri(data.getData());
 	            Toast.makeText(this, "Image saved to:\n" + getFileUri(), Toast.LENGTH_LONG).show();
 	            
+	            Intent sendFileUri = new Intent(Intent.ACTION_SEND);
+	            sendFileUri.setType("text/plain");
+	            sendFileUri.putExtra(android.content.Intent.EXTRA_TEXT, fileUri.toString());
+	            startActivity(sendFileUri);
+	            
 	            Intent pictureViewIntent = new Intent(MainActivity.this,
 						PictureView.class);
 			
