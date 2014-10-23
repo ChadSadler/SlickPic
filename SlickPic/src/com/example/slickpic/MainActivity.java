@@ -1,7 +1,9 @@
 package com.example.slickpic;
 
 import android.support.v7.app.ActionBarActivity;
+import android.content.ContentValues;
 import android.content.Intent;
+import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -11,19 +13,24 @@ import android.widget.Toast;
 
 public class MainActivity extends ActionBarActivity {
 	private static final int CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE = 100;
-	private static final String MEDIA_TYPE_IMAGE = null;
 	private Uri fileUri;
+	Uri mCapturedImageURI;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
 		
+		String fileName = "temp.jpg";  
+        ContentValues values = new ContentValues();  
+        values.put(MediaStore.Images.Media.TITLE, fileName);  
+        mCapturedImageURI = getContentResolver().insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values);  
+
+		
 		 // create Intent to take a picture and return control to the calling application
 	    Intent cameraIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
 
-	    setFileUri(getOutputMediaFileUri(MEDIA_TYPE_IMAGE)); // create a file to save the image
-	    cameraIntent.putExtra(MediaStore.EXTRA_OUTPUT, getFileUri()); // set the image file name
+	    cameraIntent.putExtra(MediaStore.EXTRA_OUTPUT, mCapturedImageURI); // set the image file name
 
 	    // start the image capture Intent
 	    startActivityForResult(cameraIntent, CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE);
@@ -32,13 +39,19 @@ public class MainActivity extends ActionBarActivity {
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 	    if (requestCode == CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE) {
 	        if (resultCode == RESULT_OK) {
-	            // Image captured and saved to fileUri specified in the Intent
-	        	setFileUri(data.getData());
-	            Toast.makeText(this, "Image saved to:\n" + getFileUri(), Toast.LENGTH_LONG).show();
+	        	
+	        	String[] projection = { MediaStore.Images.Media.DATA};
+	            Cursor cursor = managedQuery(mCapturedImageURI, projection, null, null, null); 
 	            
-	            Intent pictureViewIntent = new Intent(MainActivity.this,
-						PictureView.class);
-	            pictureViewIntent.putExtra("fileUri", fileUri.toString());
+	            int column_index_data = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA); 
+	            cursor.moveToFirst(); 
+	            String capturedImageFilePath = cursor.getString(column_index_data);
+	        	
+	            // Image captured and saved to fileUri specified in the Intent
+	            Toast.makeText(this, "Image saved to:\n" + capturedImageFilePath, Toast.LENGTH_LONG).show();
+	            
+	            Intent pictureViewIntent = new Intent(MainActivity.this,PictureView.class);
+	            pictureViewIntent.putExtra("fileUri", capturedImageFilePath);
 			
 				startActivity(pictureViewIntent);
 				
@@ -49,11 +62,6 @@ public class MainActivity extends ActionBarActivity {
 	        }
 	    }
 	    
-	}
-
-	private Uri getOutputMediaFileUri(String mediaTypeImage) {
-		// TODO Auto-generated method stub
-		return null;
 	}
 
 	@Override
