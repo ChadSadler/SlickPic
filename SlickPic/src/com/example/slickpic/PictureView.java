@@ -9,7 +9,6 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ImageView;
-import android.widget.Toast;
 import android.view.View.OnClickListener;
 
 public class PictureView extends Activity {
@@ -24,8 +23,6 @@ public class PictureView extends Activity {
 		File imgFile = new File(fileUri);
 		String path = imgFile.getAbsolutePath();
 		Uri pathUri = Uri.parse(path);
-		
-		Toast.makeText(this, path, Toast.LENGTH_LONG).show();
 
 		ImageView myImage = (ImageView) findViewById(R.id.imgView);
 

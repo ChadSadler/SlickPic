@@ -46,9 +46,6 @@ public class MainActivity extends ActionBarActivity {
 	            int column_index_data = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA); 
 	            cursor.moveToFirst(); 
 	            String capturedImageFilePath = cursor.getString(column_index_data);
-	        	
-	            // Image captured and saved to fileUri specified in the Intent
-	            Toast.makeText(this, "Image saved to:\n" + capturedImageFilePath, Toast.LENGTH_LONG).show();
 	            
 	            Intent pictureViewIntent = new Intent(MainActivity.this,PictureView.class);
 	            pictureViewIntent.putExtra("fileUri", capturedImageFilePath);
