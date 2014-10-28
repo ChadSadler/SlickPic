@@ -6,8 +6,11 @@ import android.app.Activity;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.Toast;
+import android.view.View.OnClickListener;
 
 public class PictureView extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
@@ -24,10 +27,23 @@ public class PictureView extends Activity {
 		
 		Toast.makeText(this, path, Toast.LENGTH_LONG).show();
 
-		//Bitmap myBitmap = BitmapFactory.decodeFile(imgFile.getAbsolutePath());
-
 		ImageView myImage = (ImageView) findViewById(R.id.imgView);
 
 		myImage.setImageURI(pathUri);	
+		
+		ImageButton noButton = (ImageButton) findViewById(R.id.noButton);
+		ImageButton yesButton = (ImageButton) findViewById(R.id.yesButton);
+		
+		noButton.setOnClickListener(new OnClickListener() {
+			public void onClick(View view) {
+
+			}
+		});
+		
+		yesButton.setOnClickListener(new OnClickListener() {
+			public void onClick(View view) {
+
+			}
+		});
+		}
 	}
-}
