@@ -267,12 +267,12 @@ int id homeAsUp 0x7f050005
 int id icon 0x7f05002a
 int id ifRoom 0x7f05000a
 int id image 0x7f050027
-int id imgView 0x7f05003c
+int id imgView 0x7f05003e
 int id listMode 0x7f050001
 int id list_item 0x7f050029
 int id middle 0x7f050012
 int id never 0x7f050009
-int id noButton 0x7f05003d
+int id noButton 0x7f05003c
 int id none 0x7f050010
 int id normal 0x7f050000
 int id progress_circular 0x7f050018
@@ -300,7 +300,7 @@ int id top_action_bar 0x7f050020
 int id up 0x7f050021
 int id useLogo 0x7f050003
 int id withText 0x7f05000c
-int id yesButton 0x7f05003e
+int id yesButton 0x7f05003d
 int integer abc_max_action_buttons 0x7f090000
 int layout abc_action_bar_decor 0x7f030000
 int layout abc_action_bar_decor_include 0x7f030001

@@ -26,7 +26,8 @@ public class PictureView extends Activity {
 
 		ImageView myImage = (ImageView) findViewById(R.id.imgView);
 
-		myImage.setImageURI(pathUri);	
+		myImage.setImageURI(pathUri);
+		myImage.setRotation(90);
 		
 		ImageButton noButton = (ImageButton) findViewById(R.id.noButton);
 		ImageButton yesButton = (ImageButton) findViewById(R.id.yesButton);
