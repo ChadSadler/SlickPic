@@ -1,10 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout 
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout
+	xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
-    android:gravity="bottom|left|right"
-    android:orientation="vertical">
+    android:layout_height="fill_parent">
+    
+    <ImageView
+        android:id="@+id/imgView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:scaleType="fitXY" />
+    
+	<RelativeLayout 
+    	android:id="@+id/rLayout"
+    	android:layout_width="fill_parent"
+    	android:layout_height="fill_parent"
+    	android:gravity="bottom|left|right"
+    	android:orientation="vertical">
 
     <ImageButton
         android:id="@+id/noButton"
@@ -22,11 +34,5 @@
         android:layout_alignParentRight="true"
         android:src="@drawable/check" />
 
-    <ImageView
-        android:id="@+id/imgView"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:scaleType="fitXY" />
-
     </RelativeLayout>
+</RelativeLayout>
